@@ -1,0 +1,88 @@
+{
+    "settings": {
+        "maintenance": false,
+        "nodeStatus": false,
+        "McScript": false,
+        "autoLeave": false,
+        "consoleSave": false,
+        "updateFromGithub": false,
+
+        "nodeStatusDelay": 15,
+
+        "guildID": "",
+        "admin": [""],
+        "avoidServerPorts": [],
+
+        "statusOnMaintenance": "On Maintenance mode"
+    },
+
+    "channelID": {
+        "legal": "980064766854844437",
+        "errorLog": "980135082788548628",
+        "welcome": "980116817504788592",
+        "bye": "980116817504788592",
+        "abuse": "980135082788548628",
+        "ticketChannel": "980451006246699028",
+        "nodeStatus": "980115902072758283",
+        "suggestions": "980711542532210738",
+        "analyse": "980135082788548628",
+        "github": "980135082788548628"
+    },
+
+    "logs":{
+        "dms": "",
+        "createlog": ""
+    },
+
+    "voiceID": {
+        "members": "980117558575398972",
+        "clients": "980117576283734046",
+        "servers": "980117599226564638"
+    },
+    "parentID": {
+        "createAccount": "980097814921084969",
+        "ticketParent": "980097897649545256"
+    },
+    "roleID": {
+        "staff": "980142092028362763",
+        "support": "980142035346530365",
+        "member": "980065001253527652",
+        "admin": "980141953465327666",
+        "administrator": "980078990352060447",
+        "client": "980142179097927700",
+        "betatester": "980142240703864904"
+    },
+
+    "fastify": {
+        "port": 1856
+    },
+
+    "bot":{
+        "token": "",
+        "prefix": "!"
+    },
+
+    "pterodactyl": {
+        "myIp": "",
+        "host": "https://panel.eternode.ga",
+        "adminApiKey": "",
+        "clientAPI":"",
+        "depolymentlocations": [1]
+    },
+    "nginxPM": {
+        "host": "host",
+        "email": "",
+        "pass": ""
+    },
+    "lavalink": {
+        "nodes": [
+            {
+                "host": "",
+                "port": 27002,
+                "password": "password",
+                "retryDelay": 3000,
+                "secure": false
+            }
+        ]
+    }
+}
