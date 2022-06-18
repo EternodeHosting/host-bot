@@ -1,7 +1,7 @@
 const config = require('../../config.json')
 const Discord = require('discord.js');
 const axios = require('axios');
-const emoji = '<:minecraft:732625175610261574>'
+const emoji = '<:blue_arrow:964977636084416535>'
 module.exports = async (client, message, args) => {
     if (!userData.get(message.author.id)) {
         message.reply(":x: You dont have an account created. type `!user new` to create one");
@@ -12,7 +12,7 @@ module.exports = async (client, message, args) => {
         
         const panelButton = new Discord.MessageButton()
         .setStyle('LINK')
-        .setURL('https://panel.eternode.ga/')
+        .setURL('https://panel.luxxy.host')
         .setLabel("Panel")
         
         const row = new Discord.MessageActionRow()
@@ -21,9 +21,10 @@ module.exports = async (client, message, args) => {
         const noTypeListed = new Discord.MessageEmbed() 
         .setColor('#36393f')
         .setTitle('Types of servers you can create:')
-        .addField(`${emoji} __**Minecraft**__: `, `> Paper \n > Bedrock \n > Bungeecord \n > Vanilla \n`, true)
-        .addField(`${emoji} __**Web**__: `, `> Nginx \n > Wordpress`, true)
-        .addField(`${emoji} __**Other**__: `, `> Eggactyl`, true)        
+        .addField(`${emoji} __**Discord Bots**__: `, `> NodeJS \n > Python \n > AIO (all in one) \n > Golang \n > Ruby \n > Dotnet \n > RedBot`, true)
+        .addField(`${emoji} __**Databases**__:`, `> MongoDB \n > Redis`, true)
+        .addField(`${emoji} __**Web**__:`, `> Nginx \n > Uptime-Kuma`, true)
+        .addField(`${emoji} __**Other**__:`, `> CodeServer \n > Gitea \n > Haste \n > Sharex \n > Share`, true)
         .setFooter("Example: !server create NodeJS Testing Server")
 
         message.channel.send({
@@ -65,6 +66,20 @@ module.exports = async (client, message, args) => {
         },
         data: ServerData,
     }).then(response => {
+
+        console.log(`[${new Date().toLocaleString()}] [${message.guild.name}] [${message.author.tag}] Created server: ${response.data.attributes.name}`)
+
+        const serverButton = new Discord.MessageButton()
+        .setStyle('LINK')
+        .setURL(`${config.pterodactyl.host}/server/${response.data.attributes.identifier}`)
+        if (response.data.attributes.name.length < 25) {
+            serverButton.setLabel(`[${response.data.attributes.name}] Server Link`)
+        } else {
+            serverButton.setLabel(`Server Link`)
+        }
+
+        const row2 = new Discord.MessageActionRow()
+        .addComponents([serverButton])
         
         msg.edit({
             content: null,
@@ -75,10 +90,12 @@ module.exports = async (client, message, args) => {
                 .setDescription(`
                 > **Status:** \`${response.statusText}\`
                 > **User ID:** \`${userData.get(message.author.id).consoleID}\`
+                > **Server ID:** \`${response.data.attributes.identifier}\`
                 > **Server Name:** \`${srvname ? srvname : args[1]}\`
                 > **Server Type:** \`${args[1].toLowerCase()}\`
                 `)
-            ]
+            ],
+            components: [row2]
         })
 
         const logchannel = client.channels.cache.get(config.logs.createlog)

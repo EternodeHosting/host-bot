@@ -27,8 +27,8 @@ module.exports = async (client) => {
         for(let server of servers){
             await wait(3000)
             let allocation = allocations.find(all => all.attributes.id === server.attributes.allocation)
-            console.log(`checking ${server.attributes.name}`)
-            let mc = await pinger.pingPromise('n2.luxxy.host', allocation.attributes.port).catch(()=>{})
+            console.log(chalk.red('[ Security ]')+` Checking ${server.attributes.name} on port ${allocation.attributes.port}`+ ` Node: 2`)
+            let mc = await pinger.pingPromise('game02.eternode.ga', allocation.attributes.port).catch(()=>{})
             if(mc) {
 
                 let user = (await axios({

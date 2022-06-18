@@ -48,7 +48,7 @@ module.exports = async (client, message, args) => {
             client.users.cache.get(message.author.id).send({embeds:[
                 new Discord.MessageEmbed()
                 .setColor(`BLUE`)
-                .setDescription(`New password for EterNode: ||**${data.password}**||`)
+                .setDescription(`New password for Eternode Hosting: ||**${data.password}**||`)
                 .setFooter({text:`This message will autodestruct in 10 minutes`})
             ]}).then(x => {
                 message.channel.send({embeds:[

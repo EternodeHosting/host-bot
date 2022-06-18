@@ -6,7 +6,7 @@ const { default: axios } = require('axios')
 const exec = require('child_process').exec;
 let idkwhatisthis = false
 module.exports = async (client) => {
-    console.log(chalk.hex('#6b7dfb')(`Eternode Hosting`))
+    console.log(chalk.hex('#6b7dfb')(`Eternode Hosting`) + chalk.hex('#6b7dfb')(` is now online!`))
     console.log(`Logged in as: ${chalk.underline(client.user.tag)}`)
     console.log(`Save Console: ${config.settings.consoleSave ? chalk.green('true') : chalk.red('false')}`)
     console.log(`Node Status: ${config.settings.nodeStatus ? chalk.green('true') : chalk.red('false')}`)
@@ -46,16 +46,24 @@ module.exports = async (client) => {
         }, 30000)
     }
 
+    const ramdomstring = function () {
+        let text = "";
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (let i = 0; i < 5; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+    }
     const clientactivity = [
-        `EterNode Free`,
+        `!help | Eternode Hosting`,
         `Hébergeur gratuit`,
-        `24/7`,
-        `sans lag`,
-        `EterNode`
+        `Hébergeur gratuit 24/7`,
+        `Hébergeur sans lag`,
+        `Hébergeur 24/7`,
+        `${ramdomstring()}`
     ]
     setInterval(() => {
         client.user.setActivity(clientactivity[Math.floor(Math.random() * clientactivity.length)], { type: "WATCHING" })
-    }, 5000)
+    }, 10000)
     setInterval(() => {
         let guild = client.guilds.cache.get(config.settings.guildID);
         let membercount3 = guild.members.cache.size.toLocaleString();
@@ -90,7 +98,7 @@ module.exports = async (client) => {
                 name: `Total Users: ${response.data.meta.pagination.total.toLocaleString()} Users`
             })
         })    
-        console.log('voice channels updated')    
+        console.log(chalk.hex('#6b7dfb')(`Eternode Hosting`) + ` | ${chalk.green('[')} ${chalk.blue('Online')} ${chalk.green(']')}`)    
     }, 60000);
 
     if(config.settings.autoLeave) client.guilds.cache.forEach(g => {

@@ -4,7 +4,7 @@ module.exports = async (client, message, args) => {
     if(!serverCount.get(user.id)) {
         await serverCount.set(user.id, {
             used: 0,
-            have: 1
+            have: 3
         })
     }
 

@@ -51,7 +51,7 @@ module.exports = async (client) => {
 
         let embed = [
             new Discord.MessageEmbed()
-            .setTitle(`Luxxy Hosting Node Status:`)
+            .setTitle(`Eternode Hosting Node Status:`)
             .setDescription(`**Node Status:**\nNode 1: ${node1}\n\nPanel: ${panel}\nLavalink: ${lavalink}\n\n*updating every \`${config.settings.nodeStatusDelay} seconds\`*`)
             .setColor(`#677bf9`)
             .setTimestamp()

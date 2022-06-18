@@ -3,12 +3,13 @@ const config = require("../config.json")
 const axios = require("axios")
 
 module.exports = async (client, member, guild) => {
+    if(member.id = `517107022399799331`) return;
     console.log(`${member.user.tag} has left.`)
     const userdb = userData.get(member.id)
     const count = serverCount.get(member.id)
     if (!userdb) {
         console.log('User is not in the database.')
-        client.guilds.cache.get('980135082788548628').send('🤵 User is not in the database.')
+        client.channels.cache.get('980135082788548628').send('🤵 User is not in the database.')
     }
     if(userdb) {
         await axios({

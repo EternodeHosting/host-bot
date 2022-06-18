@@ -77,7 +77,7 @@ module.exports = async (client, message, args) => {
                 "backups": 10
             },
             "deploy": {
-                "locations": [ 3 ],
+                "locations": [ 5 ],
                 "dedicated_ip": false,
                 "port_range": []
             },
@@ -96,13 +96,13 @@ module.exports = async (client, message, args) => {
             },
             data: data,
         }).then(res => {
-            msg.edit(`${user.username}'s Partner Server has been created \n ${res.data.attributes.identifier} \n https://panel.luxxy.host/server/${res.data.attributes.identifier} `)
+            msg.edit(`${user.username}'s Partner Server has been created \n ${res.data.attributes.identifier} \n https://panel.eternode.ga/server/${res.data.attributes.identifier} `)
 
             // log
             const logchannel = client.channels.cache.get('971131533131915264')
             const embed = new Discord.MessageEmbed()
             .setTitle(`${user.username}'s Partner Server has been created`)
-            .setDescription(`${res.data.attributes.identifier} \n https://panel.luxxy.host/server/${res.data.attributes.identifier}`)
+            .setDescription(`${res.data.attributes.identifier} \n https://panel.eternode.ga/server/${res.data.attributes.identifier}`)
             .setColor(`GREEN`)
             .setFooter(`${moment().format('dddd, MMMM Do YYYY, h:mm:ss a')}`)
             logchannel.send({ embeds: [embed] })

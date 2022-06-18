@@ -28,7 +28,7 @@ module.exports = {
                 collector.on('collect', (reaction, user) => {
                     if(!invinfo.get(message.author.id)) return message.channel.send({embeds:[
                         new Discord.MessageEmbed()
-                        .setTitle(`:x: | Something went wrong, you dont have invites saved in my database, type "!invites" to fix it`)
+                        .setTitle(`:x: | Something went wrong, you dont have invites saved in my database, type ">invites" to fix it`)
                         .setColor("RED")
                     ]})
                     if(reaction.emoji.name === '✅'){
