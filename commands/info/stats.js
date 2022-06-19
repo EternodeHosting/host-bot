@@ -5,8 +5,8 @@ module.exports = {
     aliases: [''],
     
     async run(client, message, args) {
-        const node1ping = await ping.promise.probe('https://n1.luxxy.host:8080')
-        const node2ping = await ping.promise.probe('https://n2.luxxy.host:8080')
+        const node1ping = await ping.promise.probe('https://game01.eternode.ga:8080')
+        const node2ping = await ping.promise.probe('https://game02.eternode.ga:8080')
         const node1online = node1ping.alive
         const node2online = node2ping.alive
         const node11 = node1online ? 'Offline' : 'Online'

@@ -36,7 +36,7 @@ module.exports = (client) => {
             const logChannel = member.guild.channels.cache.find(c => c.id === config.channelID.welcome);
 
             welcometext = [
-                `Welcome to Luxxy Hosting`
+                `Welcome to Eternode Hosting`
             ]
 
             var wtl = Math.floor(Math.random() * welcometext.length);
