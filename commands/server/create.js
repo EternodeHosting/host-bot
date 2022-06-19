@@ -12,7 +12,7 @@ module.exports = async (client, message, args) => {
         
         const panelButton = new Discord.MessageButton()
         .setStyle('LINK')
-        .setURL('https://panel.luxxy.host')
+        .setURL('https://panel.eternode.ga')
         .setLabel("Panel")
         
         const row = new Discord.MessageActionRow()
