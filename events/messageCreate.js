@@ -23,13 +23,13 @@ module.exports = async (client, message) => {
     if(message.content.includes("discord.gg/")) {
         // vérification permissions pour bypass
         if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL) return;
-           
+        // by TechKaven#7265  
         // channel pub eternode
         if(message.channel.id === '980857551325384744') return;
         deleteMessage();
     }
     if(message.content.includes("discord.com/invite/")) {
-        
+        // by TechKaven#7265
         // vérification permissions pour bypass
         if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL) return;
            
