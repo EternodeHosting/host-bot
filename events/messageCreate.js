@@ -1,8 +1,10 @@
 const config = require("../config.json")
 const wait = require('node:timers/promises').setTimeout;
 const chalk = require('chalk');
-const { Discord, MessageEmbed } = require('discord.js');
+const { Discord, MessageEmbed, Permissions } = require('discord.js');
 const db = require("quick.db");
+
+
 module.exports = async (client, message) => {
     let blacklisted = db.get(`blacklist_${message.author.id}`);
     if(message.author?.bot) return
@@ -19,9 +21,20 @@ module.exports = async (client, message) => {
     }
     const invites = ["discord.gg/", "discord.com/invite/"];
     if(message.content.includes("discord.gg/")) {
+        // vérification permissions pour bypass
+        if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL) return;
+           
+        // channel pub eternode
+        if(message.channel.id === '980857551325384744') return;
         deleteMessage();
     }
     if(message.content.includes("discord.com/invite/")) {
+        
+        // vérification permissions pour bypass
+        if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL) return;
+           
+        // channel pub eternode
+        if(message.channel.id === '980857551325384744') return;
         deleteMessage();
     }
 
