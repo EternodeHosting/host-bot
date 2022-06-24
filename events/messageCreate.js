@@ -112,12 +112,8 @@ module.exports = async (client, message) => {
     if(config.settings.maintenance === true && !message.member.roles.cache.has(config.roleID.administrator)) return
     if(!message.content.toLowerCase().startsWith(config.bot.prefix) || message.author.bot) return;
     if(message.content.length <= config.bot.prefix.length) return 
-
-    if (message.author.bot) return;
-    if (!message.guild) return;
-    if (!message.content.startsWith(default_prefix)) return;
-
-    if (!message.member)
+    
+    
     message.member = message.guild.fetchMember(message);
 
     const args = message.content
