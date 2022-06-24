@@ -117,7 +117,7 @@ module.exports = async (client, message) => {
     message.member = message.guild.fetchMember(message);
 
     const args = message.content
-        .slice(default_prefix.length)
+        .slice(config.bot.prefix)
         .trim()
         .split(/ +/g);
     const cmd = args.shift().toLowerCase();
