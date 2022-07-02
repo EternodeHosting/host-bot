@@ -25,7 +25,7 @@ module.exports = async (client) => {
 
         if(member.user.presence.status.includes('.gg/INVITEID')) {
 
-            const role = await server.roles.fetch('RoleID')
+            const role = server.roles.fetch('RoleID')
             member.roles.add(role)
 
         }
