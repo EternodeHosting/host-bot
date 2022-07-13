@@ -20,18 +20,6 @@ module.exports = async (client) => {
         require(`../autoRun/${file}`)(client)
     });
 
-    const server = client.guilds.cache.get("myServerID"); 
-    server.members.cache.forEach(member => {
-
-        if(member.user.presence.status.includes('.gg/INVITEID')) {
-
-            const role = server.roles.fetch('RoleID')
-            member.roles.add(role)
-
-        }
-
-    }); 
-
     if(config.settings.updateFromGithub){
         setInterval(async () => {
             await exec(`git pull origin master`, async (error, stdout) => {
