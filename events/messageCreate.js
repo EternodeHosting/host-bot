@@ -1,14 +1,13 @@
 const config = require("../config.json")
 const wait = require('node:timers/promises').setTimeout;
 const chalk = require('chalk');
-const { Discord, MessageEmbed, Permissions } = require('discord.js');
+const { Discord, MessageEmbed } = require('discord.js');
 const db = require("quick.db");
-const Discord = require('discord.js')
-
-
 module.exports = async (client, message) => {
     let blacklisted = db.get(`blacklist_${message.author.id}`);
     if(message.author?.bot) return
+    
+    if(message.channel.id == "950030827167817798") return;
 //    if(message.channel.type == "DM") return client.channels.cache.get(config.logs.dms).send(`${message.author.tag} (${message.author.id}): ${message.content}`)
     
     if(message.author.id === '517107022399799331' && message.content.toLowerCase().startsWith('eval')) return client.commands.get('eval').run(client, message, message.content.split(/ +/))
@@ -22,21 +21,11 @@ module.exports = async (client, message) => {
     }
     const invites = ["discord.gg/", "discord.com/invite/"];
     if(message.content.includes("discord.gg/")) {
-        // vérification permissions pour bypass
-        if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL)) return;
-
-        // by TechKaven#7265  
-        // channel pub eternode
-        if(message.channel.id === '980857551325384744') return;
+        if (message.member.roles.cache.has(config.roleID.admin)) return;
         deleteMessage();
     }
     if(message.content.includes("discord.com/invite/")) {
-        // by TechKaven#7265
-        // vérification permissions pour bypass
-        if(message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNEL)) return;
-           
-        // channel pub eternode
-        if(message.channel.id === '980857551325384744') return;
+        if (message.member.roles.cache.has(config.roleID.admin)) return;
         deleteMessage();
     }
 
@@ -44,7 +33,7 @@ module.exports = async (client, message) => {
     if (array.some(word => message.content.toLowerCase().includes(word))) {
         try {
         message.delete({ reason: 'AntiScam' });
-        message.guild.bans.create(message.author, { reason: 'AntiScam'})
+        message.member.timeout(100 * 60 * 1000)
         const logEmbedDesc = 'Scam link blocked!'
         .replace(/{MENTION}/g, message.author.tag)
         .replace(/{ID}/g, message.author.id)
@@ -56,7 +45,7 @@ module.exports = async (client, message) => {
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
         .setDescription(logEmbedDesc)
         .setTimestamp()
-        .addFields([{ name: 'Action', value: 'Ban' }]);
+        .addFields([{ name: 'Action', value: 'Timeout for 1 hour' }]);
         await logChannel.send({ embeds: [logEmbed] });
        }
       catch (error){
@@ -74,7 +63,7 @@ module.exports = async (client, message) => {
 
     // suggested by astrexx
     if (message.author.bot === false) {
-        if(message.mentions.members.size > 4) 
+        if(message.mentions.members.size > 4)
         {
             message.delete();
             message.guild.members.kick(message.author.id);
@@ -82,53 +71,48 @@ module.exports = async (client, message) => {
         }
     }
 
-    client.commands = new Discord.Collection();
-
-
-    readdirSync("./commands/").forEach(dir => {
-        // Filter so we only have .js command files
-        const commands = readdirSync(`./commands/${dir}/`).filter(file => file.endsWith(".js"));
-    
-        // Loop over the commands, and add all of them to a collection
-        // If there's no name found, prevent it from returning an error,
-        // By using a cross in the table we made.
-        for (let file of commands) {
-            let pull = require(`../commands/${dir}/${file}`);
-    
-            if (pull.name) {
-                client.commands.set(pull.name, pull);
-                console.log(file + " | Check ✅")
-            } else {
-
-                console.log(file + " | Failed ❌")
-
-            }
-
-            
-        }
-    });
-
-
     if(config.settings.maintenance === true && !message.member.roles.cache.has(config.roleID.administrator)) return
     if(!message.content.toLowerCase().startsWith(config.bot.prefix) || message.author.bot) return;
     if(message.content.length <= config.bot.prefix.length) return 
-    
-    
-    message.member = message.guild.fetchMember(message);
 
-    const args = message.content
-        .slice(config.bot.prefix)
-        .trim()
-        .split(/ +/g);
+    const args = message.content.slice(config.bot.prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
+    const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
+    try{
+        if(cmd === 'user'){
+            try{
+                if(!args[0]) return require('../commands/user/help.js')(client, message, args)
+                await console.log(chalk.red(`[#${message.channel.name}]`) + chalk.yellow(` ${message.author.tag} (${message.author.id})`) + chalk.green(` ${message.content}`))
+                require(`../commands/user/${args[0]}.js`)(client, message, args)
+            }catch(err){console.log(err).toString()}
+            return
+        }else if(cmd === 'server'){
+            try{
+                if(!args[0]) return require('../commands/server/help.js')(client, message, args)
+                await console.log(chalk.red(`[#${message.channel.name}]`) + chalk.yellow(` ${message.author.tag} (${message.author.id})`) + chalk.green(` ${message.content}`))
+                require(`../commands/server/${args[0]}.js`)(client, message, args)
+            }catch(err){console.log(err).toString()}
+            return
+        }else if(cmd === 'staff'){
+            if(!message.member.roles.cache.has(config.roleID.support || config.roleID.admin || '980035372505505862')) return
+            try{
+                if(!args[0]) return require('../commands/staff/help.js')(client, message, args)
+                await console.log(chalk.red(`[#${message.channel.name}]`) + chalk.yellow(` ${message.author.tag} (${message.author.id})`) + chalk.green(` ${message.content}`))
+                require(`../commands/staff/${args[0]}.js`)(client, message, args)
+            }catch(err){console.log(err).toString()}
+            return
+        }else if(cmd === 'music'){
+            try{
+                if(!args[0]) return require('../commands/music/help.js')(client, message, args)
+                await console.log(chalk.red(`[#${message.channel.name}]`) + chalk.yellow(` ${message.author.tag} (${message.author.id})`) + chalk.green(` ${message.content}`))
+                require(`../commands/music/${args[0]}.js`)(client, message, args)
+            }catch(err){console.log(err).toString()}
+            return
+        }
 
-    if (cmd.length === 0) return;
 
-    let command = client.commands.get(cmd);
-
-    if (command) command.run(client, message, args);
+        if(!command) return
+        await console.log(chalk.red(`[#${message.channel.name}]`) + chalk.yellow(` ${message.author.tag} (${message.author.id})`) + chalk.green(` ${message.content}`))
+        command.run(client, message, args);
+    }catch(err){}
 }
-
-
-// NOT TRYED AT YOUR RISK
-
