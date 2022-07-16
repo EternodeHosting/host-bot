@@ -5,7 +5,7 @@ module.exports = (message, args) => {
          .setColor('#0099ff') 
          .setDescription(`Information about ${message.author.username}#${message.author.discriminator}`) 
          .setTitle('User Info') 
-         .addField('Username', `${message.author.username}`) 
+         .addField('Username', `<@${message.author.id>}`) 
          .addField('ID', `||${message.author.id}||`) 
          .addField('Created At', `${message.author.createdAt}`) 
          .addField('Joined At', `${message.member.joinedAt}`) 
